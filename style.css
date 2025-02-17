@@ -1,0 +1,45 @@
+.quiz-container {
+    display: flex;
+    /*ne s'applique qu'aux enfants directs*/
+    flex-direction: column;
+    margin-top: 10%;
+    
+}
+
+.question {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    border: solid;
+    border-radius: 8em;
+    margin: 1em;
+    padding: 10px;
+    margin-left: 20%;
+    margin-right: 20%;
+}
+
+.options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    padding-top: 1em;
+}
+
+.options button {
+    padding: 10px;
+    border-radius: 8em;
+    margin-left: 25%;
+    margin-right: 25%;
+}
+
+.button-container button {
+    padding: 5px;
+    border-radius:5em ;
+    margin-left: 20%;
+    margin-right: 20%;
+}
