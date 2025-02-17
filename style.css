@@ -1,8 +1,19 @@
+.quintessential-regular {
+    font-family: "Quintessential", serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+body{
+    background-image: url("Black-Lake-Boats-Crossing-To-Hogwarts.png");
+    background-size: cover;
+}  
+
 .quiz-container {
     display: flex;
     /*ne s'applique qu'aux enfants directs*/
     flex-direction: column;
-    margin-top: 10%;
+    margin-top: 8%;
     
 }
 
@@ -16,6 +27,10 @@
     padding: 10px;
     margin-left: 20%;
     margin-right: 20%;
+    background-color: rgba(97, 10, 0, 0.744);
+    color: rgb(179, 164, 31);
+    font-weight: bolder;
+    font-size: larger;
 }
 
 .options {
@@ -35,11 +50,23 @@
     border-radius: 8em;
     margin-left: 25%;
     margin-right: 25%;
+    font-family: "Quintessential", serif;
+    background-color: rgba(97, 10, 0, 0.744);
+    color: rgb(179, 164, 31);
+    font-weight: bold;
+    font-size: large;
 }
 
 .button-container button {
-    padding: 5px;
+    padding: 10px;
     border-radius:5em ;
+    border: solid;
+    border-width: 0.1em;
     margin-left: 20%;
     margin-right: 20%;
+    font-family: "Quintessential", serif;
+    background-color: rgba(5, 68, 110, 0.82);
+    color: rgb(184, 180, 180);
+    font-weight: bold;
+    font-size: medium;
 }
