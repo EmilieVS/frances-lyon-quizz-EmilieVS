@@ -4,51 +4,54 @@ import {quizzitch} from './questions.js';
 const askQuestion = document.getElementById('question-text');
 const answers = document.getElementById('options-text');
 const buttonNext = document.getElementById('next-button');
+const buttonReplay = document.getElementById('replay-button');
 
 // Variables pour suivre l'état du quiz
 let currentQuestionIndex = 0; // Commence à la première question
 
 // Fonction pour afficher une question basée sur l'index actuel
 function loadQuestion() {
-  // Vider le conteneur des options
-  answers.innerHTML = '';
-
-  // Récupérer la question actuelle (+reponse+correctanswer)
-  const currentQuestion = quizzitch.questions[currentQuestionIndex];
-
-  // Injecter la question dans le HTML
-  askQuestion.innerText = currentQuestion.text; /*indice en plus ?*/
-
+  answers.innerHTML = ''; // Vider le conteneur des options
+  const currentQuestion = quizzitch.questions[currentQuestionIndex]; // Récup question actuelle + réponses
+  askQuestion.innerText = currentQuestion.text; // Injecter la question dans le HTML
   // Injecter les options dans le HTML 
   currentQuestion.options.forEach(options => {
     const optionButton = document.createElement('button');
     optionButton.innerText = options;
     answers.classList.add('options');
+    optionButton.addEventListener("click", () => {
+      alert("click")
+    })
     answers.appendChild(optionButton);
   });
 }
-
-
-// Ajouter un écouteur d'événements pour le bouton "Suivant"
-buttonNext.addEventListener('click', () => {
-  // Incrémenter l'index de la question
-  currentQuestionIndex++;
-
-  // Vérifier s'il reste des questions
-  if (currentQuestionIndex < quizzitch.questions.length) {
-    // Afficher la question suivante
-    loadQuestion();
-  } else {
-    // Si plus de questions, indiquer la fin du quiz
-    askQuestion.innerText = 'FIN DU QUIZZ';
-    answers.innerHTML = ''; // Effacer les options
-    buttonNext.style.display = 'none'; // Cacher le bouton Suivant
-  }
-});
-
 // Charger la première question au chargement de la page
 loadQuestion();
 
+// Comparer entre l'event listener et la correct answer sans sortir du callback de l'event listener.
+
+// const correctAnswer = quizzitch.questions[0].options[0]
+// Ajouter un écouteur d'événements pour le bouton "Suivant"
+buttonNext.addEventListener('click', () => {
+  
+  currentQuestionIndex++; // Incrémenter l'index de la question
+  if (currentQuestionIndex < quizzitch.questions.length) { // Vérifier s'il reste des questions
+    loadQuestion(); // Afficher la question suivante
+  } else {
+    askQuestion.innerText = 'FIN DU QUIZZ'; // Si plus de questions, indiquer la fin du quiz
+    answers.innerHTML = ''; // Effacer les options
+    buttonNext.style.display = 'none'; // Cacher le bouton Suivant
+    buttonReplay.style.display = 'inline-block'; // Afficher le bouton rejouer
+  }
+});
+
+// Fonction pour réinitialiser le quiz
+buttonReplay.addEventListener('click', () => {
+  currentQuestionIndex = 0; // TODO Réinitialiser l'index 
+  buttonNext.style.display = 'inline-block'; // Afficher le bouton Suivant
+  buttonReplay.style.display = 'none'; // Cacher le bouton rejouer
+  loadQuestion(); // TODO Recharger la première question
+});
 
 //*********** ETAPE 4 **************   
 // // // Récupérer la première question ainsi que ses réponses + la bonne reponse
