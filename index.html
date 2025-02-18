@@ -8,21 +8,23 @@
 	<style>
 		@import url('https://fonts.googleapis.com/css2?family=Quintessential&display=swap');
 	</style>
-    <script defer src="script.js"></script>
+    <script defer src="questions.js"></script>
+	<script type="module" src="game.js"></script>
+	
 </head>
 <body class="quintessential-regular">
 	
 	<div class="quiz-container">
 	<!-- Section pour la question -->
-		<div class="question">
-            Gryffondor : Quelle est la relique de Godric Gryffondor ?
+		<div class="question" id="question">
+            
 		</div>
 		<!-- Section pour les options -->
-		<div class="options">
-		  <button id="option1">Le Choixpeau magique</button>
-		  <button id="option2">L'Epée</button>
-		  <button id="option3">Le Médaillon</button>
-		  <button id="option4">La Coupe</button>
+		<div class="options" id="options">
+		  <button id="option1"></button>
+		  <button id="option2"></button>
+		  <button id="option3"></button>
+		  <button id="option4"></button>
 		</div>
 		<!-- Prévois déjà le design du bouton "suivant" pour passer à la prochaine question -->
 		 <div class="button-container">
@@ -31,5 +33,6 @@
 		
 		  
 	</div>
+	
 </body>
 </html>
