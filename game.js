@@ -1,4 +1,4 @@
-import {quizzitch} from './questions.js';
+import { quizzitch } from './questions.js';
 
 // Récupérer les emplacements pour injecter la question et les options et bouton suivant
 const askQuestion = document.getElementById('question-text');
@@ -11,6 +11,7 @@ let currentQuestionIndex = 0; // Commence à la première question
 
 // Fonction pour afficher une question basée sur l'index actuel
 function loadQuestion() {
+  let goodAnswer = quizzitch.questions[currentQuestionIndex].correct_answer;
   answers.innerHTML = ''; // Vider le conteneur des options
   const currentQuestion = quizzitch.questions[currentQuestionIndex]; // Récup question actuelle + réponses
   askQuestion.innerText = currentQuestion.text; // Injecter la question dans le HTML
@@ -20,20 +21,27 @@ function loadQuestion() {
     optionButton.innerText = options;
     answers.classList.add('options');
     optionButton.addEventListener("click", () => {
-      alert("click")
+      let playerAnswer = optionButton.innerText;
+      checkAnswer(playerAnswer, goodAnswer);
     })
     answers.appendChild(optionButton);
-  });
-}
+  })
+};
 // Charger la première question au chargement de la page
 loadQuestion();
 
 // Comparer entre l'event listener et la correct answer sans sortir du callback de l'event listener.
-
+function checkAnswer(playerChoice, correctAnswer) {
+  if (playerChoice = correctAnswer) {
+    return true;
+  } else {
+    return false;
+  }
+};
 // const correctAnswer = quizzitch.questions[0].options[0]
 // Ajouter un écouteur d'événements pour le bouton "Suivant"
 buttonNext.addEventListener('click', () => {
-  
+
   currentQuestionIndex++; // Incrémenter l'index de la question
   if (currentQuestionIndex < quizzitch.questions.length) { // Vérifier s'il reste des questions
     loadQuestion(); // Afficher la question suivante
