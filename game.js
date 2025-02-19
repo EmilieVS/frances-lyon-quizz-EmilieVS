@@ -65,20 +65,21 @@ buttonNext.addEventListener('click', () => {
   if (currentQuestionIndex < quizzitch.questions.length) { // Vérifier s'il reste des questions
     loadQuestion(); // Afficher la question suivante
   } else {
-    askQuestion.innerText = `Tu as obtenu ${score}/4 !` // Si plus de questions, indiquer la fin du quiz
+    askQuestion.innerText = `Tu as obtenu ${score}/4 🧙 !` // Si plus de questions, indiquer la fin du quiz
+    scoreText.style.display = 'block'; //Afficher le scoreText
     answers.innerHTML = ''; // Effacer les options
-    buttonNext.style.display = 'none'; // Cacher le bouton Suivant
+    buttonNext.style.display = 'none'; // Désactiver le bouton Suivant
     buttonReplay.style.display = 'inline-block'; // Afficher le bouton rejouer
     if (score == 0) { 
-      scoreText.innerText = "toto";
+      scoreText.innerText = "Normal, t'es un moldu 🤷 ";
     } else if (score == 1) {
-      scoreText.innerText = "tutu";
+      scoreText.innerText = "T'es pas la baguette la plus vive de chez Ollivander 🪄 ";
     } else if (score == 2) {
-      scoreText.innerText = "tata";
+      scoreText.innerText = "Qui t'as lancé 'oubliettes' 🤯 ?";
     } else if (score == 3) {
-      scoreText.innerText = "tati";
+      scoreText.innerText = "T'es le fayot de Minerva 🪦🌼";
     } else if (score == 4) {
-      scoreText.innerText = "tate";
+      scoreText.innerText = "T'as eu optimal à toutes tes B.U.S.E. 🧑‍🎓✨ ";
     };
   }
 });
@@ -87,10 +88,11 @@ buttonNext.addEventListener('click', () => {
 buttonReplay.addEventListener('click', () => {
   currentQuestionIndex = 0; // Réinitialiser l'index 
   score = 0; //Reset du score 
-  scoreText.innerHTML = "";
   buttonNext.style.display = 'inline-block'; // Afficher le bouton Suivant
-  buttonReplay.style.display = 'none'; // Cacher le bouton rejouer
-  loadQuestion(); // TODO Recharger la première question
+  buttonReplay.style.display = 'none'; // Désactiver l'affichage du bouton rejouer
+  loadQuestion(); // Recharger la première question
+  scoreText.style.display = 'none'; //Désactiver l'affichage de scoreText 
+
 });
 
 //*********** ETAPE 4 **************   

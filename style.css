@@ -72,8 +72,18 @@ body{
 }
 
 #score-text {
+    display: flex;
+    justify-content: center;
     text-align: center;
-    padding:2% ;
-    color: azure;
+    border: solid;
+    border-radius: 8em;
+    margin: 1em;
+    padding: 8px;
+    margin-left: 35%;
+    margin-right: 35%;
+    background-color: rgba(70, 53, 51, 0.908);
+    color: rgb(179, 164, 31);
+    font-weight: bold;
+    font-size: large;
 
 }
