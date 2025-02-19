@@ -16,14 +16,27 @@ function loadQuestion() {
   const currentQuestion = quizzitch.questions[currentQuestionIndex]; // Récup question actuelle + réponses
   askQuestion.innerText = currentQuestion.text; // Injecter la question dans le HTML
   // Injecter les options dans le HTML 
-  currentQuestion.options.forEach(options => {
+
+  let validButton; //afin d'isoler plus tard la bonne réponse
+
+  currentQuestion.options.forEach(option => {
     const optionButton = document.createElement('button');
-    optionButton.innerText = options;
+    optionButton.innerText = option;
     answers.classList.add('options');
+    if (optionButton.innerText == goodAnswer) { // on compare le texte du bouton au texte de la correctAnswer (pas besoin de rajouter innerText)
+      validButton = optionButton; //si c'est egal, on stock la valeur de optionButton dans la variable globale validButton qui deviendra donc un "bouton".
+    }
     optionButton.addEventListener("click", () => {
       let playerAnswer = optionButton.innerText;
-      checkAnswer(playerAnswer, goodAnswer);
-    })
+      let coloredAnswer = checkAnswer(playerAnswer, goodAnswer);
+      
+      if (coloredAnswer) /*veut dire == true*/ {
+        optionButton.style.borderColor = 'green';
+      } else {
+        optionButton.style.borderColor = 'red';
+        validButton.style.borderColor = 'green';
+      }
+    }) 
     answers.appendChild(optionButton);
   })
 };
@@ -32,7 +45,7 @@ loadQuestion();
 
 // Comparer entre l'event listener et la correct answer sans sortir du callback de l'event listener.
 function checkAnswer(playerChoice, correctAnswer) {
-  if (playerChoice = correctAnswer) {
+  if (playerChoice == correctAnswer) {
     return true;
   } else {
     return false;
