@@ -5,6 +5,7 @@ const askQuestion = document.getElementById('question-text');
 const answers = document.getElementById('options-text');
 const buttonNext = document.getElementById('next-button');
 const buttonReplay = document.getElementById('replay-button');
+let score = 0;
 
 // Variables pour suivre l'état du quiz
 let currentQuestionIndex = 0; // Commence à la première question
@@ -32,6 +33,8 @@ function loadQuestion() {
       buttonNext.disabled = false; // Au clique d'une réponse, le boutton "suivant" s'active
       if (coloredAnswer) /*veut dire == true*/ {
         optionButton.style.borderColor = 'green';
+        score++;
+        console.log(score);
       } else {
         optionButton.style.borderColor = 'red';
         validButton.style.borderColor = 'green';
@@ -62,7 +65,7 @@ buttonNext.addEventListener('click', () => {
   if (currentQuestionIndex < quizzitch.questions.length) { // Vérifier s'il reste des questions
     loadQuestion(); // Afficher la question suivante
   } else {
-    askQuestion.innerText = 'FIN DU QUIZZ'; // Si plus de questions, indiquer la fin du quiz
+    askQuestion.innerText = `Tu as obtenu ${score}/4 !` // Si plus de questions, indiquer la fin du quiz
     answers.innerHTML = ''; // Effacer les options
     buttonNext.style.display = 'none'; // Cacher le bouton Suivant
     buttonReplay.style.display = 'inline-block'; // Afficher le bouton rejouer
@@ -71,7 +74,8 @@ buttonNext.addEventListener('click', () => {
 
 // Fonction pour réinitialiser le quiz
 buttonReplay.addEventListener('click', () => {
-  currentQuestionIndex = 0; // TODO Réinitialiser l'index 
+  currentQuestionIndex = 0; // Réinitialiser l'index 
+  score = 0; //Reset du score 
   buttonNext.style.display = 'inline-block'; // Afficher le bouton Suivant
   buttonReplay.style.display = 'none'; // Cacher le bouton rejouer
   loadQuestion(); // TODO Recharger la première question
