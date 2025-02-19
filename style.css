@@ -70,3 +70,10 @@ body{
     font-weight: bold;
     font-size: medium;
 }
+
+#score-text {
+    text-align: center;
+    padding:2% ;
+    color: azure;
+
+}

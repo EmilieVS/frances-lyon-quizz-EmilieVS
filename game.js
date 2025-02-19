@@ -6,6 +6,7 @@ const answers = document.getElementById('options-text');
 const buttonNext = document.getElementById('next-button');
 const buttonReplay = document.getElementById('replay-button');
 let score = 0;
+let scoreText = document.getElementById('score-text');
 
 // Variables pour suivre l'état du quiz
 let currentQuestionIndex = 0; // Commence à la première question
@@ -19,7 +20,7 @@ function loadQuestion() {
   // Injecter les options dans le HTML 
   let validButton; //Afin d'isoler plus tard la bonne réponse
   buttonNext.disabled = true; // Désactive le boutton "suivant"
-  
+
   currentQuestion.options.forEach(option => {
     const optionButton = document.createElement('button');
     optionButton.innerText = option;
@@ -34,7 +35,6 @@ function loadQuestion() {
       if (coloredAnswer) /*veut dire == true*/ {
         optionButton.style.borderColor = 'green';
         score++;
-        console.log(score);
       } else {
         optionButton.style.borderColor = 'red';
         validButton.style.borderColor = 'green';
@@ -69,6 +69,17 @@ buttonNext.addEventListener('click', () => {
     answers.innerHTML = ''; // Effacer les options
     buttonNext.style.display = 'none'; // Cacher le bouton Suivant
     buttonReplay.style.display = 'inline-block'; // Afficher le bouton rejouer
+    if (score == 0) { 
+      scoreText.innerText = "toto";
+    } else if (score == 1) {
+      scoreText.innerText = "tutu";
+    } else if (score == 2) {
+      scoreText.innerText = "tata";
+    } else if (score == 3) {
+      scoreText.innerText = "tati";
+    } else if (score == 4) {
+      scoreText.innerText = "tate";
+    };
   }
 });
 
@@ -76,6 +87,7 @@ buttonNext.addEventListener('click', () => {
 buttonReplay.addEventListener('click', () => {
   currentQuestionIndex = 0; // Réinitialiser l'index 
   score = 0; //Reset du score 
+  scoreText.innerHTML = "";
   buttonNext.style.display = 'inline-block'; // Afficher le bouton Suivant
   buttonReplay.style.display = 'none'; // Cacher le bouton rejouer
   loadQuestion(); // TODO Recharger la première question
