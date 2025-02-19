@@ -16,9 +16,9 @@ function loadQuestion() {
   const currentQuestion = quizzitch.questions[currentQuestionIndex]; // Récup question actuelle + réponses
   askQuestion.innerText = currentQuestion.text; // Injecter la question dans le HTML
   // Injecter les options dans le HTML 
-
-  let validButton; //afin d'isoler plus tard la bonne réponse
-
+  let validButton; //Afin d'isoler plus tard la bonne réponse
+  buttonNext.disabled = true; // Désactive le boutton "suivant"
+  
   currentQuestion.options.forEach(option => {
     const optionButton = document.createElement('button');
     optionButton.innerText = option;
@@ -29,14 +29,17 @@ function loadQuestion() {
     optionButton.addEventListener("click", () => {
       let playerAnswer = optionButton.innerText;
       let coloredAnswer = checkAnswer(playerAnswer, goodAnswer);
-      
+      buttonNext.disabled = false; // Au clique d'une réponse, le boutton "suivant" s'active
       if (coloredAnswer) /*veut dire == true*/ {
         optionButton.style.borderColor = 'green';
       } else {
         optionButton.style.borderColor = 'red';
         validButton.style.borderColor = 'green';
       }
-    }) 
+      document.querySelectorAll('#options-text button').forEach(toto => { //Selection de tous les bouttons avec id options-text
+        toto.disabled = true; // Pour chacun d'entre eux, désactivation
+      });
+    })
     answers.appendChild(optionButton);
   })
 };
