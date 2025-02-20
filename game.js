@@ -16,11 +16,19 @@ function loadQuestion() {
   let goodAnswer = quizzitch.questions[currentQuestionIndex].correct_answer;
   answers.innerHTML = ''; // Vider le conteneur des options
   const currentQuestion = quizzitch.questions[currentQuestionIndex]; // Récup question actuelle + réponses
+  if (currentQuestionIndex == 0) {
+    askQuestion.style.backgroundColor = 'green';
+  } else if (currentQuestionIndex == 1) {
+    askQuestion.style.backgroundColor = 'red';
+  } else if (currentQuestionIndex == 2) {
+    askQuestion.style.backgroundColor = 'blue';
+  } else if (currentQuestionIndex == 3) {
+    askQuestion.style.backgroundColor = 'yellow';
+  }
   askQuestion.innerText = currentQuestion.text; // Injecter la question dans le HTML
   // Injecter les options dans le HTML 
   let validButton; //Afin d'isoler plus tard la bonne réponse
   buttonNext.disabled = true; // Désactive le boutton "suivant"
-
   currentQuestion.options.forEach(option => {
     const optionButton = document.createElement('button');
     optionButton.innerText = option;

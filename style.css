@@ -28,7 +28,7 @@ body{
     margin-left: 20%;
     margin-right: 20%;
     background-color: rgba(97, 10, 0, 0.744);
-    color: rgb(179, 164, 31);
+    /*color: rgb(179, 164, 31);*/
     font-weight: bolder;
     font-size: larger;
 }
