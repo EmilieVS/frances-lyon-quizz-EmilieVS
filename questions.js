@@ -31,7 +31,7 @@ export const quizzitch = {
             correct_answer: "La Dame Grise"
         },
         {
-            text: "Serpentard : Que voit-on des dortoirs de Serpentard?",
+            text: "Serpentard : Que voit-on des fenêtres des dortoirs de Serpentard?",
             options: [
                 "La forêt interdite",
                 "La volière",

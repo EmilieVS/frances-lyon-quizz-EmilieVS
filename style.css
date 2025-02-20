@@ -55,6 +55,7 @@ body{
     color: rgb(179, 164, 31);
     font-weight: bold;
     font-size: large;
+    border-width: 0.3em;
 }
 
 .button-container button {

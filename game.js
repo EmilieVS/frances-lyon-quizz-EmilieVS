@@ -33,11 +33,11 @@ function loadQuestion() {
       let coloredAnswer = checkAnswer(playerAnswer, goodAnswer);
       buttonNext.disabled = false; // Au clique d'une réponse, le boutton "suivant" s'active
       if (coloredAnswer) /*veut dire == true*/ {
-        optionButton.style.borderColor = 'green';
+        optionButton.style.borderColor = '#85e085';
         score++;
       } else {
-        optionButton.style.borderColor = 'red';
-        validButton.style.borderColor = 'green';
+        optionButton.style.borderColor = '#ff0000';
+        validButton.style.borderColor = '#85e085';
       }
       document.querySelectorAll('#options-text button').forEach(toto => { //Selection de tous les bouttons avec id options-text
         toto.disabled = true; // Pour chacun d'entre eux, désactivation
