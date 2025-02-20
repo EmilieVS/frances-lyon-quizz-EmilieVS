@@ -17,13 +17,13 @@ function loadQuestion() {
   answers.innerHTML = ''; // Vider le conteneur des options
   const currentQuestion = quizzitch.questions[currentQuestionIndex]; // Récup question actuelle + réponses
   if (currentQuestionIndex == 0) {
-    askQuestion.style.backgroundColor = 'green';
+    askQuestion.style.backgroundColor = '#610a00be';
   } else if (currentQuestionIndex == 1) {
-    askQuestion.style.backgroundColor = 'red';
+    askQuestion.style.backgroundColor = '#ffd633';
   } else if (currentQuestionIndex == 2) {
-    askQuestion.style.backgroundColor = 'blue';
+    askQuestion.style.backgroundColor = '#0077B3';
   } else if (currentQuestionIndex == 3) {
-    askQuestion.style.backgroundColor = 'yellow';
+    askQuestion.style.backgroundColor = '#004d00';
   }
   askQuestion.innerText = currentQuestion.text; // Injecter la question dans le HTML
   // Injecter les options dans le HTML 
@@ -31,6 +31,19 @@ function loadQuestion() {
   buttonNext.disabled = true; // Désactive le boutton "suivant"
   currentQuestion.options.forEach(option => {
     const optionButton = document.createElement('button');
+    if (currentQuestionIndex == 0) {
+      optionButton.style.backgroundColor = '#610a00be';
+      optionButton.style.color = '#b3a41f';
+    } else if (currentQuestionIndex == 1) {
+      optionButton.style.backgroundColor = '#ffd633be';
+      optionButton.style.color = 'black';
+    } else if (currentQuestionIndex == 2) {
+      optionButton.style.backgroundColor = '#0077B3be';
+      optionButton.style.color = '#f2f2f2';
+    } else if (currentQuestionIndex == 3) {
+      optionButton.style.backgroundColor = '#004d00be';
+      optionButton.style.color = '#e6e6e6';
+    }
     optionButton.innerText = option;
     answers.classList.add('options');
     if (optionButton.innerText == goodAnswer) { // on compare le texte du bouton au texte de la correctAnswer (pas besoin de rajouter innerText)
@@ -74,11 +87,12 @@ buttonNext.addEventListener('click', () => {
     loadQuestion(); // Afficher la question suivante
   } else {
     askQuestion.innerText = `Tu as obtenu ${score}/4 🧙 !` // Si plus de questions, indiquer la fin du quiz
+    askQuestion.style.backgroundColor = '#463533e8';
     scoreText.style.display = 'block'; //Afficher le scoreText
     answers.innerHTML = ''; // Effacer les options
     buttonNext.style.display = 'none'; // Désactiver le bouton Suivant
     buttonReplay.style.display = 'inline-block'; // Afficher le bouton rejouer
-    if (score == 0) { 
+    if (score == 0) {
       scoreText.innerText = "Normal, t'es un moldu 🤷 ";
     } else if (score == 1) {
       scoreText.innerText = "T'es pas la baguette la plus vive de chez Ollivander 🪄 ";

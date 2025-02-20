@@ -27,7 +27,7 @@ body{
     padding: 10px;
     margin-left: 20%;
     margin-right: 20%;
-    background-color: rgba(97, 10, 0, 0.744);
+    background-color: #610a00be;
     /*color: rgb(179, 164, 31);*/
     font-weight: bolder;
     font-size: larger;
@@ -51,8 +51,7 @@ body{
     margin-left: 25%;
     margin-right: 25%;
     font-family: "Quintessential", serif;
-    background-color: rgba(97, 10, 0, 0.744);
-    color: rgb(179, 164, 31);
+    color: #b3a41f;
     font-weight: bold;
     font-size: large;
     border-width: 0.3em;
@@ -82,7 +81,7 @@ body{
     padding: 8px;
     margin-left: 35%;
     margin-right: 35%;
-    background-color: rgba(70, 53, 51, 0.908);
+    background-color: #463533e8;
     color: rgb(179, 164, 31);
     font-weight: bold;
     font-size: large;
