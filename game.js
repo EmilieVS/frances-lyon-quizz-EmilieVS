@@ -18,31 +18,41 @@ function loadQuestion() {
   const currentQuestion = quizzitch.questions[currentQuestionIndex]; // Récup question actuelle + réponses
   if (currentQuestionIndex == 0) {
     askQuestion.style.backgroundColor = '#610a00be';
+    askQuestion.style.color = '#b3a41f';
   } else if (currentQuestionIndex == 1) {
     askQuestion.style.backgroundColor = '#ffd633';
+    askQuestion.style.color = 'black';
   } else if (currentQuestionIndex == 2) {
     askQuestion.style.backgroundColor = '#0077B3';
+    askQuestion.style.color = '#f2f2f2';
   } else if (currentQuestionIndex == 3) {
     askQuestion.style.backgroundColor = '#004d00';
+    askQuestion.style.color = '#e6e6e6';
   }
   askQuestion.innerText = currentQuestion.text; // Injecter la question dans le HTML
   // Injecter les options dans le HTML 
   let validButton; //Afin d'isoler plus tard la bonne réponse
   buttonNext.disabled = true; // Désactive le boutton "suivant"
+  buttonNext.style.backgroundColor ='#05446ed1';
+  buttonNext.style.color = '#b8b4b4';
   currentQuestion.options.forEach(option => {
     const optionButton = document.createElement('button');
     if (currentQuestionIndex == 0) {
       optionButton.style.backgroundColor = '#610a00be';
       optionButton.style.color = '#b3a41f';
+      optionButton.style.borderColor = '#b3a41f';
     } else if (currentQuestionIndex == 1) {
       optionButton.style.backgroundColor = '#ffd633be';
       optionButton.style.color = 'black';
+      optionButton.style.borderColor = '#1b1b1b';
     } else if (currentQuestionIndex == 2) {
       optionButton.style.backgroundColor = '#0077B3be';
       optionButton.style.color = '#f2f2f2';
+      optionButton.style.borderColor = '#f2f2f2';
     } else if (currentQuestionIndex == 3) {
       optionButton.style.backgroundColor = '#004d00be';
       optionButton.style.color = '#e6e6e6';
+      optionButton.style.borderColor = '#e6e6e6';
     }
     optionButton.innerText = option;
     answers.classList.add('options');
@@ -53,6 +63,8 @@ function loadQuestion() {
       let playerAnswer = optionButton.innerText;
       let coloredAnswer = checkAnswer(playerAnswer, goodAnswer);
       buttonNext.disabled = false; // Au clique d'une réponse, le boutton "suivant" s'active
+      buttonNext.style.backgroundColor ='#e7e6e2eb';
+      buttonNext.style.color = '#463533';
       if (coloredAnswer) /*veut dire == true*/ {
         optionButton.style.borderColor = '#85e085';
         score++;
@@ -97,7 +109,7 @@ buttonNext.addEventListener('click', () => {
     } else if (score == 1) {
       scoreText.innerText = "T'es pas la baguette la plus vive de chez Ollivander 🪄 ";
     } else if (score == 2) {
-      scoreText.innerText = "Qui t'as lancé 'oubliettes' 🤯 ?";
+      scoreText.innerText = "Qui t'as lancé 🪄 Oubliettes 🤯 ?";
     } else if (score == 3) {
       scoreText.innerText = "T'es le fayot de Minerva 🪦🌼";
     } else if (score == 4) {

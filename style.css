@@ -55,6 +55,7 @@ body{
     font-weight: bold;
     font-size: large;
     border-width: 0.3em;
+    cursor: pointer;
 }
 
 .button-container button {
@@ -65,13 +66,13 @@ body{
     margin-left: 20%;
     margin-right: 20%;
     font-family: "Quintessential", serif;
-    background-color: rgba(5, 68, 110, 0.82);
-    color: rgb(184, 180, 180);
+    background-color: #05446ed1;
+    color: #b8b4b4;
     font-weight: bold;
     font-size: medium;
 }
 
-#score-text {
+.score-text {
     display: flex;
     justify-content: center;
     text-align: center;
@@ -82,8 +83,13 @@ body{
     margin-left: 35%;
     margin-right: 35%;
     background-color: #463533e8;
-    color: rgb(179, 164, 31);
+    color: rgb(231, 230, 226);
+    border-color: rgb(231, 230, 226);
     font-weight: bold;
     font-size: large;
+}
 
+#replay-button {
+    background-color: #e7e6e2eb;
+    color: #463533;
 }
