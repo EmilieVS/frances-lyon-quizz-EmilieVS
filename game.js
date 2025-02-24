@@ -17,16 +17,16 @@ function loadQuestion() {
   answers.innerHTML = ''; // Vider le conteneur des options
   const currentQuestion = quizzitch.questions[currentQuestionIndex]; // Récup question actuelle + réponses
   if (currentQuestionIndex == 0) {
-    askQuestion.style.backgroundColor = '#610a00be';
+    askQuestion.style.backgroundColor = '#610a00e8';
     askQuestion.style.color = '#b3a41f';
   } else if (currentQuestionIndex == 1) {
-    askQuestion.style.backgroundColor = '#ffd633';
+    askQuestion.style.backgroundColor = '#ffd633e8';
     askQuestion.style.color = 'black';
   } else if (currentQuestionIndex == 2) {
-    askQuestion.style.backgroundColor = '#0077B3';
+    askQuestion.style.backgroundColor = '#0077B3e8';
     askQuestion.style.color = '#f2f2f2';
   } else if (currentQuestionIndex == 3) {
-    askQuestion.style.backgroundColor = '#004d00';
+    askQuestion.style.backgroundColor = '#004d00e8';
     askQuestion.style.color = '#e6e6e6';
   }
   askQuestion.innerText = currentQuestion.text; // Injecter la question dans le HTML

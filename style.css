@@ -7,6 +7,8 @@
 body{
     background-image: url("Black-Lake-Boats-Crossing-To-Hogwarts.png");
     background-size: cover;
+    background-position: center;
+    height: 100vh;
 }  
 
 .quiz-container {
@@ -22,12 +24,12 @@ body{
     justify-content: center;
     text-align: center;
     border: solid;
-    border-radius: 8em;
+    border-radius: 1em;
     margin: 1em;
     padding: 10px;
     margin-left: 20%;
     margin-right: 20%;
-    background-color: #610a00be;
+    background-color: #610a00e8;
     /*color: rgb(179, 164, 31);*/
     font-weight: bolder;
     font-size: larger;
@@ -47,7 +49,7 @@ body{
 
 .options button {
     padding: 10px;
-    border-radius: 8em;
+    border-radius: 1em;
     margin-left: 25%;
     margin-right: 25%;
     font-family: "Quintessential", serif;
@@ -58,9 +60,13 @@ body{
     cursor: pointer;
 }
 
+.options button:disabled {
+    cursor: not-allowed;
+}
+
 .button-container button {
     padding: 10px;
-    border-radius:5em ;
+    border-radius: 1em ;
     border: solid;
     border-width: 0.1em;
     margin-left: 20%;
@@ -70,8 +76,12 @@ body{
     color: #b8b4b4;
     font-weight: bold;
     font-size: medium;
+    cursor: pointer;
 }
 
+.button-container button:disabled {
+    cursor: not-allowed;
+}
 .score-text {
     display: flex;
     justify-content: center;
@@ -92,4 +102,5 @@ body{
 #replay-button {
     background-color: #e7e6e2eb;
     color: #463533;
+    cursor: pointer;
 }
