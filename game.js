@@ -1,16 +1,17 @@
 import { quizzitch } from './questions.js';
 
-// Récupérer les emplacements pour injecter la question et les options et bouton suivant
+// Récupérer HTML
 const askQuestion = document.getElementById('question-text');
 const answers = document.getElementById('options-text');
 const buttonNext = document.getElementById('next-button');
 const buttonReplay = document.getElementById('replay-button');
 const scoreText = document.getElementById('score-text');
-let score = 0;
 
-// Variables pour suivre l'état du quiz
 let currentQuestionIndex = 0; // Commence à la première question
-let storeQuestion; // On déclare 1 variable
+let storeQuestion; // On déclare 1 variable pour le localstorage
+let score = 0; // initie le score 
+let validButton; //Afin d'isoler plus tard la bonne réponse
+
 
 function storage() {
   localStorage.setItem("position", currentQuestionIndex); // stock la valeur du currentQuestionIndex
@@ -18,13 +19,7 @@ function storage() {
   return storeQuestion;
 }
 
-
-// Fonction pour afficher une question basée sur l'index actuel
-function loadQuestion() {
-  storage()
-  let goodAnswer = quizzitch.questions[storeQuestion].correct_answer;
-  answers.innerHTML = ''; // Vider le conteneur des options
-  const currentQuestion = quizzitch.questions[storeQuestion]; // Récup question actuelle + réponses
+function colorAskQuestion () {
   if (storeQuestion == 0) {
     askQuestion.style.backgroundColor = '#610a00e8';
     askQuestion.style.color = '#b3a41f';
@@ -38,42 +33,66 @@ function loadQuestion() {
     askQuestion.style.backgroundColor = '#004d00e8';
     askQuestion.style.color = '#e6e6e6';
   }
+}
+
+function colorButtonNext () {
+  if (buttonNext.disabled == true) {
+    buttonNext.style.backgroundColor = '#05446ed1';
+    buttonNext.style.color = '#b8b4b4';
+  } else if (buttonNext.disabled == false) {
+    buttonNext.style.backgroundColor = '#e7e6e2eb'; 
+    buttonNext.style.color = '#463533';
+  }
+}
+
+function colorOptionButton (boutonReponse) {
+  if (storeQuestion == 0) {
+    boutonReponse.style.backgroundColor = '#610a00be';
+    boutonReponse.style.color = '#b3a41f';
+    boutonReponse.style.borderColor = '#b3a41f';
+  } else if (storeQuestion == 1) {
+    boutonReponse.style.backgroundColor = '#ffd633be';
+    boutonReponse.style.color = 'black';
+    boutonReponse.style.borderColor = '#1b1b1b';
+  } else if (storeQuestion == 2) {
+    boutonReponse.style.backgroundColor = '#0077B3be';
+    boutonReponse.style.color = '#f2f2f2';
+    boutonReponse.style.borderColor = '#f2f2f2';
+  } else if (storeQuestion == 3) {
+    boutonReponse.style.backgroundColor = '#004d00be';
+    boutonReponse.style.color = '#e6e6e6';
+    boutonReponse.style.borderColor = '#e6e6e6';
+  }
+}
+
+function rightAnswer (a, b) {
+  if (a.innerText == b) { // on compare le texte du bouton au texte de la correctAnswer (pas besoin de rajouter innerText)
+    validButton = a; //si c'est egal, on stock la valeur de optionButton dans la variable globale validButton qui deviendra donc un "bouton".
+  }
+}
+
+/*******Fonction principale********/
+function loadQuestion() {
+  storage()
+  answers.innerHTML = ''; // Vider le conteneur des options
+  let goodAnswer = quizzitch.questions[storeQuestion].correct_answer;
+  const currentQuestion = quizzitch.questions[storeQuestion]; // Récup question actuelle + réponses
+  colorAskQuestion();
   askQuestion.innerText = currentQuestion.text; // Injecter la question dans le HTML
-  // Injecter les options dans le HTML 
-  let validButton; //Afin d'isoler plus tard la bonne réponse
   buttonNext.disabled = true; // Désactive le boutton "suivant"
-  buttonNext.style.backgroundColor = '#05446ed1';
-  buttonNext.style.color = '#b8b4b4'; // A mettre dans une fonction à part
-  currentQuestion.options.forEach(option => { 
-    const optionButton = document.createElement('button');
-    if (storeQuestion == 0) {
-      optionButton.style.backgroundColor = '#610a00be';
-      optionButton.style.color = '#b3a41f';
-      optionButton.style.borderColor = '#b3a41f';
-    } else if (storeQuestion == 1) {
-      optionButton.style.backgroundColor = '#ffd633be';
-      optionButton.style.color = 'black';
-      optionButton.style.borderColor = '#1b1b1b';
-    } else if (storeQuestion == 2) {
-      optionButton.style.backgroundColor = '#0077B3be';
-      optionButton.style.color = '#f2f2f2';
-      optionButton.style.borderColor = '#f2f2f2';
-    } else if (storeQuestion == 3) {
-      optionButton.style.backgroundColor = '#004d00be';
-      optionButton.style.color = '#e6e6e6';
-      optionButton.style.borderColor = '#e6e6e6';
-    }
+  colorButtonNext();
+  currentQuestion.options.forEach(option => { // Injecter les options dans le HTML 
+    let optionButton; // declaration variable bouton reponse
+    optionButton = document.createElement('button');
     optionButton.innerText = option;
+    colorOptionButton(optionButton);
     answers.classList.add('options');
-    if (optionButton.innerText == goodAnswer) { // on compare le texte du bouton au texte de la correctAnswer (pas besoin de rajouter innerText)
-      validButton = optionButton; //si c'est egal, on stock la valeur de optionButton dans la variable globale validButton qui deviendra donc un "bouton".
-    }
-    optionButton.addEventListener("click", () => {
+    rightAnswer(optionButton, goodAnswer);
+    optionButton.addEventListener("click", () => { // placer la suite en une fonction qui sera appelée par l'AEL
       let playerAnswer = optionButton.innerText;
       let coloredAnswer = checkAnswer(playerAnswer, goodAnswer);
       buttonNext.disabled = false; // Au clique d'une réponse, le boutton "suivant" s'active
-      buttonNext.style.backgroundColor = '#e7e6e2eb'; 
-      buttonNext.style.color = '#463533';
+      colorButtonNext();
       if (coloredAnswer) /*veut dire == true*/ {
         optionButton.style.borderColor = '#85e085';
         score++;
