@@ -8,7 +8,7 @@ export const quizzitch = {
                 "Le Médaillon",
                 "La Coupe",
             ],
-            correct_answer: "L'Epée"
+            correct_answer: "L'Epée",
         },
         {
             text: "Poufsouffle : Qui a été capitaine de l’équipe de Quidditch?",
