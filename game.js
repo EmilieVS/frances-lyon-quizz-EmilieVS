@@ -5,27 +5,36 @@ const askQuestion = document.getElementById('question-text');
 const answers = document.getElementById('options-text');
 const buttonNext = document.getElementById('next-button');
 const buttonReplay = document.getElementById('replay-button');
+const scoreText = document.getElementById('score-text');
 let score = 0;
-let scoreText = document.getElementById('score-text');
 
 // Variables pour suivre l'état du quiz
 let currentQuestionIndex = 0; // Commence à la première question
+let storeQuestion; // On déclare 1 variable
+
+function storage() {
+  localStorage.setItem("position", currentQuestionIndex); // stock la valeur du currentQuestionIndex
+  storeQuestion = localStorage.getItem("position");  // restitue la valeur 
+  return storeQuestion;
+}
+
 
 // Fonction pour afficher une question basée sur l'index actuel
 function loadQuestion() {
-  let goodAnswer = quizzitch.questions[currentQuestionIndex].correct_answer;
+  storage()
+  let goodAnswer = quizzitch.questions[storeQuestion].correct_answer;
   answers.innerHTML = ''; // Vider le conteneur des options
-  const currentQuestion = quizzitch.questions[currentQuestionIndex]; // Récup question actuelle + réponses
-  if (currentQuestionIndex == 0) {
+  const currentQuestion = quizzitch.questions[storeQuestion]; // Récup question actuelle + réponses
+  if (storeQuestion == 0) {
     askQuestion.style.backgroundColor = '#610a00e8';
     askQuestion.style.color = '#b3a41f';
-  } else if (currentQuestionIndex == 1) {
+  } else if (storeQuestion == 1) {
     askQuestion.style.backgroundColor = '#ffd633e8';
     askQuestion.style.color = 'black';
-  } else if (currentQuestionIndex == 2) {
+  } else if (storeQuestion == 2) {
     askQuestion.style.backgroundColor = '#0077B3e8';
     askQuestion.style.color = '#f2f2f2';
-  } else if (currentQuestionIndex == 3) {
+  } else if (storeQuestion == 3) {
     askQuestion.style.backgroundColor = '#004d00e8';
     askQuestion.style.color = '#e6e6e6';
   }
@@ -33,23 +42,23 @@ function loadQuestion() {
   // Injecter les options dans le HTML 
   let validButton; //Afin d'isoler plus tard la bonne réponse
   buttonNext.disabled = true; // Désactive le boutton "suivant"
-  buttonNext.style.backgroundColor ='#05446ed1';
-  buttonNext.style.color = '#b8b4b4';
-  currentQuestion.options.forEach(option => {
+  buttonNext.style.backgroundColor = '#05446ed1';
+  buttonNext.style.color = '#b8b4b4'; // A mettre dans une fonction à part
+  currentQuestion.options.forEach(option => { 
     const optionButton = document.createElement('button');
-    if (currentQuestionIndex == 0) {
+    if (storeQuestion == 0) {
       optionButton.style.backgroundColor = '#610a00be';
       optionButton.style.color = '#b3a41f';
       optionButton.style.borderColor = '#b3a41f';
-    } else if (currentQuestionIndex == 1) {
+    } else if (storeQuestion == 1) {
       optionButton.style.backgroundColor = '#ffd633be';
       optionButton.style.color = 'black';
       optionButton.style.borderColor = '#1b1b1b';
-    } else if (currentQuestionIndex == 2) {
+    } else if (storeQuestion == 2) {
       optionButton.style.backgroundColor = '#0077B3be';
       optionButton.style.color = '#f2f2f2';
       optionButton.style.borderColor = '#f2f2f2';
-    } else if (currentQuestionIndex == 3) {
+    } else if (storeQuestion == 3) {
       optionButton.style.backgroundColor = '#004d00be';
       optionButton.style.color = '#e6e6e6';
       optionButton.style.borderColor = '#e6e6e6';
@@ -63,7 +72,7 @@ function loadQuestion() {
       let playerAnswer = optionButton.innerText;
       let coloredAnswer = checkAnswer(playerAnswer, goodAnswer);
       buttonNext.disabled = false; // Au clique d'une réponse, le boutton "suivant" s'active
-      buttonNext.style.backgroundColor ='#e7e6e2eb';
+      buttonNext.style.backgroundColor = '#e7e6e2eb'; 
       buttonNext.style.color = '#463533';
       if (coloredAnswer) /*veut dire == true*/ {
         optionButton.style.borderColor = '#85e085';
@@ -72,12 +81,14 @@ function loadQuestion() {
         optionButton.style.borderColor = '#ff0000';
         validButton.style.borderColor = '#85e085';
       }
-      document.querySelectorAll('#options-text button').forEach(toto => { //Selection de tous les bouttons avec id options-text
-        toto.disabled = true; // Pour chacun d'entre eux, désactivation
+
+      document.querySelectorAll('#options-text button').forEach(tate => { //Selection de tous les bouttons avec id options-text
+        tate.disabled = true; // Pour chacun d'entre eux, désactivation
       });
     })
     answers.appendChild(optionButton);
   })
+
 };
 // Charger la première question au chargement de la page
 loadQuestion();
@@ -93,7 +104,7 @@ function checkAnswer(playerChoice, correctAnswer) {
 // const correctAnswer = quizzitch.questions[0].options[0]
 // Ajouter un écouteur d'événements pour le bouton "Suivant"
 buttonNext.addEventListener('click', () => {
-
+  storage()
   currentQuestionIndex++; // Incrémenter l'index de la question
   if (currentQuestionIndex < quizzitch.questions.length) { // Vérifier s'il reste des questions
     loadQuestion(); // Afficher la question suivante
@@ -115,9 +126,10 @@ buttonNext.addEventListener('click', () => {
     } else if (score == 4) {
       scoreText.innerText = "T'as eu optimal à toutes tes B.U.S.E. 🧑‍🎓✨ ";
     }
-   localStorage.quizzitch = score;
-    alert(localStorage.quizzitch);
-    
+    //localStorage.quizzitch = score;
+    //alert(localStorage.quizzitch);
+
+
 
   }
 });
