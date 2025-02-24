@@ -114,7 +114,11 @@ buttonNext.addEventListener('click', () => {
       scoreText.innerText = "T'es le fayot de Minerva 🪦🌼";
     } else if (score == 4) {
       scoreText.innerText = "T'as eu optimal à toutes tes B.U.S.E. 🧑‍🎓✨ ";
-    };
+    }
+   localStorage.quizzitch = score;
+    alert(localStorage.quizzitch);
+    
+
   }
 });
 
