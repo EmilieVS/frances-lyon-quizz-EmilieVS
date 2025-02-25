@@ -18,6 +18,12 @@ body{
     border: solid;
     color: grey;
 }
+.timer {
+    display: inline-flex;
+    color: #b3a41f;
+    justify-content: center;
+    font-weight: bolder;
+}
 
 .quiz-container {
     display: flex;

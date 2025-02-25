@@ -6,7 +6,8 @@ const answers = document.getElementById('options-text');
 const buttonNext = document.getElementById('next-button');
 const buttonReplay = document.getElementById('replay-button');
 const scoreText = document.getElementById('score-text');
-let progressBar = document.getElementById('progressBar');
+const progressBar = document.getElementById('progressBar');
+const time = document.getElementById('timer')
 
 let currentQuestionIndex = 0; // Commence à la première question
 let storeQuestion; // On déclare 1 variable pour le localstorage
@@ -14,8 +15,9 @@ let score = 0; // initie le score
 let validButton; //Afin d'isoler plus tard la bonne réponse
 let maxBar = 4; // Max de la barre de progression
 
+
 /****Fonctions secondaires*******/
-function displayBar(){
+function displayBar() {
   progressBar.value = currentQuestionIndex;
   progressBar.max = maxBar;
 };
@@ -94,8 +96,27 @@ function checkAnswer(playerChoice, correctAnswer) { // Comparer entre l'event li
   } else {
     return false;
   }
+
 };
 
+function countdown() {
+  let counter = 10;
+  time.innerText = `Il reste 00:${counter}`;
+  const timer = setInterval(function () {
+    counter--;
+    time.innerText = `Il reste 00:0${counter}`;
+    if (counter === 0) {
+      goToNextQuestion()
+      clearInterval(timer);
+    } else if (buttonNext.disabled == false) {
+      clearInterval(timer);
+    }
+  }, 1000);
+};
+
+
+
+// SettimeOut appelle une fonction une fois, au bout d'un délai prédéfini
 /*******Fonction principale********/
 function loadQuestion() {
   storage();
@@ -128,14 +149,18 @@ function loadQuestion() {
 };
 
 /****Charger la première question au chargement de la page****/
-loadQuestion(); 
+loadQuestion();
+countdown();
 
-buttonNext.addEventListener('click', () => {
+function goToNextQuestion() {
   storage();
   currentQuestionIndex++; // Incrémenter l'index de la question
   if (currentQuestionIndex < quizzitch.questions.length) { // Vérifier s'il reste des questions
+    clearTimeout(timer);
+    countdown();
     loadQuestion(); // Afficher la question suivante
   } else {
+    timer.innerHTML = "";
     progressBar.value = maxBar; // Quand plus de questions, la barre de progression est au max
     askQuestion.innerText = `Tu as obtenu ${score}/4 🧙 !` // Si plus de questions, indiquer la fin du quiz
     askQuestion.style.backgroundColor = '#463533e8';
@@ -157,14 +182,16 @@ buttonNext.addEventListener('click', () => {
     //localStorage.quizzitch = score;
     //alert(localStorage.quizzitch);
 
-
-
   }
+}
+buttonNext.addEventListener('click', () => {
+  goToNextQuestion()
 });
 
 buttonReplay.addEventListener('click', () => {
   currentQuestionIndex = 0; // Réinitialiser l'index 
   score = 0; //Reset du score 
+  countdown()
   buttonNext.style.display = 'inline-block'; // Afficher le bouton Suivant
   buttonReplay.style.display = 'none'; // Désactiver l'affichage du bouton rejouer
   loadQuestion(); // Recharger la première question
