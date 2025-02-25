@@ -13,7 +13,7 @@ let currentQuestionIndex = 0; // Commence à la première question
 let storeQuestion; // On déclare 1 variable pour le localstorage
 let score = 0; // initie le score 
 let validButton; //Afin d'isoler plus tard la bonne réponse
-let maxBar = 4; // Max de la barre de progression
+let maxBar = quizzitch.questions.length; // Max de la barre de progression
 
 
 /****Fonctions secondaires*******/
@@ -96,17 +96,16 @@ function checkAnswer(playerChoice, correctAnswer) { // Comparer entre l'event li
   } else {
     return false;
   }
-
 };
 
-function countdown() {
+function countdown() { // SetInterval appelle une fonction au bout d'un délai prédéfini
   let counter = 10;
   time.innerText = `Il reste 00:${counter}`;
   const timer = setInterval(function () {
     counter--;
     time.innerText = `Il reste 00:0${counter}`;
     if (counter === 0) {
-      goToNextQuestion()
+      goToNextQuestion();
       clearInterval(timer);
     } else if (buttonNext.disabled == false) {
       clearInterval(timer);
@@ -114,9 +113,35 @@ function countdown() {
   }, 1000);
 };
 
+function goToNextQuestion() {
+  storage();
+  currentQuestionIndex++; // Incrémenter l'index de la question
+  if (currentQuestionIndex < quizzitch.questions.length) { // Vérifier s'il reste des questions
+    countdown();
+    loadQuestion(); // Afficher la question suivante
+  } else {
+    time.innerHTML = "";
+    progressBar.value = maxBar; // Quand plus de questions, la barre de progression est au max
+    askQuestion.innerText = `Tu as obtenu ${score}/4 🧙 !` // Si plus de questions, indiquer la fin du quiz
+    askQuestion.style.backgroundColor = '#463533e8';
+    scoreText.style.display = 'block'; //Afficher le scoreText
+    answers.innerHTML = ''; // Effacer les options
+    buttonNext.style.display = 'none'; // Désactiver le bouton Suivant
+    buttonReplay.style.display = 'inline-block'; // Afficher le bouton rejouer
+    if (score == 0) {
+      scoreText.innerText = "Normal, t'es un moldu 🤷 ";
+    } else if (score == 1) {
+      scoreText.innerText = "T'es pas la baguette la plus vive de chez Ollivander 🪄 ";
+    } else if (score == 2) {
+      scoreText.innerText = "Qui t'as lancé 🪄 Oubliettes 🤯 ?";
+    } else if (score == 3) {
+      scoreText.innerText = "T'es le fayot de Minerva 🪦🌼";
+    } else if (score == 4) {
+      scoreText.innerText = "T'as eu optimal à toutes tes B.U.S.E. 🧑‍🎓✨ ";
+    }
+  }
+}
 
-
-// SettimeOut appelle une fonction une fois, au bout d'un délai prédéfini
 /*******Fonction principale********/
 function loadQuestion() {
   storage();
@@ -148,42 +173,10 @@ function loadQuestion() {
   })
 };
 
-/****Charger la première question au chargement de la page****/
+/****Charger la première question et le timer au chargement de la page****/
 loadQuestion();
 countdown();
 
-function goToNextQuestion() {
-  storage();
-  currentQuestionIndex++; // Incrémenter l'index de la question
-  if (currentQuestionIndex < quizzitch.questions.length) { // Vérifier s'il reste des questions
-    clearTimeout(timer);
-    countdown();
-    loadQuestion(); // Afficher la question suivante
-  } else {
-    timer.innerHTML = "";
-    progressBar.value = maxBar; // Quand plus de questions, la barre de progression est au max
-    askQuestion.innerText = `Tu as obtenu ${score}/4 🧙 !` // Si plus de questions, indiquer la fin du quiz
-    askQuestion.style.backgroundColor = '#463533e8';
-    scoreText.style.display = 'block'; //Afficher le scoreText
-    answers.innerHTML = ''; // Effacer les options
-    buttonNext.style.display = 'none'; // Désactiver le bouton Suivant
-    buttonReplay.style.display = 'inline-block'; // Afficher le bouton rejouer
-    if (score == 0) {
-      scoreText.innerText = "Normal, t'es un moldu 🤷 ";
-    } else if (score == 1) {
-      scoreText.innerText = "T'es pas la baguette la plus vive de chez Ollivander 🪄 ";
-    } else if (score == 2) {
-      scoreText.innerText = "Qui t'as lancé 🪄 Oubliettes 🤯 ?";
-    } else if (score == 3) {
-      scoreText.innerText = "T'es le fayot de Minerva 🪦🌼";
-    } else if (score == 4) {
-      scoreText.innerText = "T'as eu optimal à toutes tes B.U.S.E. 🧑‍🎓✨ ";
-    }
-    //localStorage.quizzitch = score;
-    //alert(localStorage.quizzitch);
-
-  }
-}
 buttonNext.addEventListener('click', () => {
   goToNextQuestion()
 });
@@ -196,5 +189,4 @@ buttonReplay.addEventListener('click', () => {
   buttonReplay.style.display = 'none'; // Désactiver l'affichage du bouton rejouer
   loadQuestion(); // Recharger la première question
   scoreText.style.display = 'none'; //Désactiver l'affichage de scoreText 
-
 });
