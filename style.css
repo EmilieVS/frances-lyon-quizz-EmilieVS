@@ -9,7 +9,15 @@ body{
     background-size: cover;
     background-position: center;
     height: 100vh;
-}  
+} 
+.progressBar {
+    margin: auto;
+    display: flex;
+    width: 60%;
+    height: 30px;
+    border: solid;
+    color: grey;
+}
 
 .quiz-container {
     display: flex;

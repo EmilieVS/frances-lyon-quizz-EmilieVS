@@ -6,13 +6,20 @@ const answers = document.getElementById('options-text');
 const buttonNext = document.getElementById('next-button');
 const buttonReplay = document.getElementById('replay-button');
 const scoreText = document.getElementById('score-text');
+let progressBar = document.getElementById('progressBar');
 
 let currentQuestionIndex = 0; // Commence à la première question
 let storeQuestion; // On déclare 1 variable pour le localstorage
 let score = 0; // initie le score 
 let validButton; //Afin d'isoler plus tard la bonne réponse
+let maxBar = 4; // Max de la barre de progression
 
 /****Fonctions secondaires*******/
+function displayBar(){
+  progressBar.value = currentQuestionIndex;
+  progressBar.max = maxBar;
+};
+
 function storage() {
   localStorage.setItem("position", currentQuestionIndex); // stock la valeur du currentQuestionIndex
   storeQuestion = localStorage.getItem("position");  // restitue la valeur 
@@ -92,6 +99,7 @@ function checkAnswer(playerChoice, correctAnswer) { // Comparer entre l'event li
 /*******Fonction principale********/
 function loadQuestion() {
   storage();
+  displayBar();
   answers.innerHTML = ''; // Vider le conteneur des réponses
   const goodAnswer = quizzitch.questions[storeQuestion].correct_answer; // Recup bonne reponse actuelle
   const currentQuestion = quizzitch.questions[storeQuestion]; // Récup question actuelle + réponses actuelles
@@ -123,11 +131,12 @@ function loadQuestion() {
 loadQuestion(); 
 
 buttonNext.addEventListener('click', () => {
-  storage()
+  storage();
   currentQuestionIndex++; // Incrémenter l'index de la question
   if (currentQuestionIndex < quizzitch.questions.length) { // Vérifier s'il reste des questions
     loadQuestion(); // Afficher la question suivante
   } else {
+    progressBar.value = maxBar; // Quand plus de questions, la barre de progression est au max
     askQuestion.innerText = `Tu as obtenu ${score}/4 🧙 !` // Si plus de questions, indiquer la fin du quiz
     askQuestion.style.backgroundColor = '#463533e8';
     scoreText.style.display = 'block'; //Afficher le scoreText
