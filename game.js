@@ -120,7 +120,7 @@ function goToNextQuestion() {
     countdown();
     loadQuestion(); // Afficher la question suivante
   } else {
-    time.innerHTML = "";
+    time.innerHTML = '';
     progressBar.value = maxBar; // Quand plus de questions, la barre de progression est au max
     askQuestion.innerText = `Tu as obtenu ${score}/4 🧙 !` // Si plus de questions, indiquer la fin du quiz
     askQuestion.style.backgroundColor = '#463533e8';
