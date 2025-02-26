@@ -10,7 +10,7 @@ const progressBar = document.getElementById('progressBar');
 const time = document.getElementById('timer')
 
 let currentQuestionIndex; // Commence à la première question
-let storeQuestion; // On déclare 1 variable pour le localstorage
+//let storeQuestion; // On déclare 1 variable pour le localstorage
 let score = 0; // initie le score 
 let validButton; //Afin d'isoler plus tard la bonne réponse
 let maxBar = quizzitch.questions.length; // Max de la barre de progression
@@ -23,27 +23,27 @@ function displayBar() {
 };
 
 function storage() {
-  if (storeQuestion !== undefined){
-    storeQuestion = localStorage.getItem("position");  // restitue la valeur
-    currentQuestionIndex = storeQuestion;
+  if (localStorage.getItem('position') !== null){
+    currentQuestionIndex = localStorage.getItem("position");  // restitue la valeur
+    
   } else {
     currentQuestionIndex = 0;
     localStorage.setItem("position", currentQuestionIndex); // stock la valeur du currentQuestionIndex
-    storeQuestion = localStorage.getItem("position");  // restitue la valeur 
+      
   }
 };
 
 function colorAskQuestion() {
-  if (storeQuestion == 0) {
+  if (currentQuestionIndex == 0) {
     askQuestion.style.backgroundColor = '#610a00e8';
     askQuestion.style.color = '#b3a41f';
-  } else if (storeQuestion == 1) {
+  } else if (currentQuestionIndex == 1) {
     askQuestion.style.backgroundColor = '#ffd633e8';
     askQuestion.style.color = 'black';
-  } else if (storeQuestion == 2) {
+  } else if (currentQuestionIndex == 2) {
     askQuestion.style.backgroundColor = '#0077B3e8';
     askQuestion.style.color = '#f2f2f2';
-  } else if (storeQuestion == 3) {
+  } else if (currentQuestionIndex == 3) {
     askQuestion.style.backgroundColor = '#004d00e8';
     askQuestion.style.color = '#e6e6e6';
   }
@@ -60,19 +60,19 @@ function colorButtonNext() {
 };
 
 function colorOptionButton(boutonReponse) {
-  if (storeQuestion == 0) {
+  if (currentQuestionIndex == 0) {
     boutonReponse.style.backgroundColor = '#610a00be';
     boutonReponse.style.color = '#b3a41f';
     boutonReponse.style.borderColor = '#b3a41f';
-  } else if (storeQuestion == 1) {
+  } else if (currentQuestionIndex == 1) {
     boutonReponse.style.backgroundColor = '#ffd633be';
     boutonReponse.style.color = 'black';
     boutonReponse.style.borderColor = '#1b1b1b';
-  } else if (storeQuestion == 2) {
+  } else if (currentQuestionIndex == 2) {
     boutonReponse.style.backgroundColor = '#0077B3be';
     boutonReponse.style.color = '#f2f2f2';
     boutonReponse.style.borderColor = '#f2f2f2';
-  } else if (storeQuestion == 3) {
+  } else if (currentQuestionIndex == 3) {
     boutonReponse.style.backgroundColor = '#004d00be';
     boutonReponse.style.color = '#e6e6e6';
     boutonReponse.style.borderColor = '#e6e6e6';
@@ -127,6 +127,8 @@ function goToNextQuestion() {
     loadQuestion(); // Afficher la question suivante
   } else {
     time.innerHTML = '';
+    localStorage.removeItem ('position');
+  
     progressBar.value = maxBar; // Quand plus de questions, la barre de progression est au max
     askQuestion.innerText = `Tu as obtenu ${score}/4 🧙 !` // Si plus de questions, indiquer la fin du quiz
     askQuestion.style.backgroundColor = '#463533e8';
@@ -153,8 +155,8 @@ function loadQuestion() {
   storage();
   displayBar();
   answers.innerHTML = ''; // Vider le conteneur des réponses
-  const goodAnswer = quizzitch.questions[storeQuestion].correct_answer; // Recup bonne reponse actuelle
-  const currentQuestion = quizzitch.questions[storeQuestion]; // Récup question actuelle + réponses actuelles
+  const goodAnswer = quizzitch.questions[currentQuestionIndex].correct_answer; // Recup bonne reponse actuelle
+  const currentQuestion = quizzitch.questions[currentQuestionIndex]; // Récup question actuelle + réponses actuelles
   colorAskQuestion();
   askQuestion.innerText = currentQuestion.text; // Injecter la question dans le HTML
   buttonNext.disabled = true; // Désactive le boutton "suivant"
@@ -180,6 +182,7 @@ function loadQuestion() {
 };
 
 /****Charger la première question et le timer au chargement de la page****/
+//localStorage.setItem ('position',0);
 loadQuestion();
 countdown();
 
