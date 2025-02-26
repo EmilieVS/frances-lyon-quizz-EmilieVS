@@ -9,7 +9,7 @@ const scoreText = document.getElementById('score-text');
 const progressBar = document.getElementById('progressBar');
 const time = document.getElementById('timer')
 
-let currentQuestionIndex = 0; // Commence à la première question
+let currentQuestionIndex; // Commence à la première question
 let storeQuestion; // On déclare 1 variable pour le localstorage
 let score = 0; // initie le score 
 let validButton; //Afin d'isoler plus tard la bonne réponse
@@ -23,9 +23,14 @@ function displayBar() {
 };
 
 function storage() {
-  localStorage.setItem("position", currentQuestionIndex); // stock la valeur du currentQuestionIndex
-  storeQuestion = localStorage.getItem("position");  // restitue la valeur 
-  return storeQuestion;
+  if (storeQuestion !== undefined){
+    storeQuestion = localStorage.getItem("position");  // restitue la valeur
+    currentQuestionIndex = storeQuestion;
+  } else {
+    currentQuestionIndex = 0;
+    localStorage.setItem("position", currentQuestionIndex); // stock la valeur du currentQuestionIndex
+    storeQuestion = localStorage.getItem("position");  // restitue la valeur 
+  }
 };
 
 function colorAskQuestion() {
@@ -114,8 +119,9 @@ function countdown() { // SetInterval appelle une fonction au bout d'un délai p
 };
 
 function goToNextQuestion() {
+  currentQuestionIndex++ // Incrémenter l'index de la question
+  localStorage.setItem("position", currentQuestionIndex);
   storage();
-  currentQuestionIndex++; // Incrémenter l'index de la question
   if (currentQuestionIndex < quizzitch.questions.length) { // Vérifier s'il reste des questions
     countdown();
     loadQuestion(); // Afficher la question suivante
