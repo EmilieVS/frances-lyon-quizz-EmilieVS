@@ -11,25 +11,21 @@
 	</style>
 	<script defer src="questions.js"></script>
 	<script defer type="module" src="game.js"></script>
-	<!--Possibilité de mettre la balise en fin de body mais possiblement obsolète(?)-->
 </head>
 
 <body class="quintessential-regular">
 	<div class="quiz-container">
 		<div class="timer" id="timer"></div>
-		<progress class="progressBar" id="progressBar"></progress>
-		<!-- Section pour la question -->
 		<div class="question" id="question-text">
 		</div>
-		<!-- Section pour les options -->
 		<div class="options" id="options-text">
 		</div>
 		<div class="score-text" id="score-text" style="display: none"></div>
-		<!-- Prévois déjà le design du bouton "suivant" pour passer à la prochaine question -->
 		<div class="button-container">
 			<button id="next-button">Suivant</button>
 			<button class="replay-button" id="replay-button" style="display: none;">Rejouer</button>
 		</div>
+		<progress class="progressBar" id="progressBar"></progress>
 	</div>
 </body>
 

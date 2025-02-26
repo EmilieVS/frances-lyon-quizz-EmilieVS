@@ -10,14 +10,16 @@ body{
     background-position: center;
     height: 100vh;
 } 
+
 .progressBar {
     margin: auto;
     display: flex;
     width: 60%;
-    height: 30px;
     border: solid;
     color: grey;
+    margin-top: 1.5em;
 }
+
 .timer {
     display: inline-flex;
     color: #b3a41f;
@@ -30,7 +32,6 @@ body{
     /*ne s'applique qu'aux enfants directs*/
     flex-direction: column;
     margin-top: 8%;
-    
 }
 
 .question {
@@ -44,7 +45,6 @@ body{
     margin-left: 20%;
     margin-right: 20%;
     background-color: #610a00e8;
-    /*color: rgb(179, 164, 31);*/
     font-weight: bolder;
     font-size: larger;
 }
@@ -73,6 +73,7 @@ body{
     border-width: 0.3em;
     cursor: pointer;
 }
+
 .options button:hover {
     transition: transform 0.4s;
     transform: scale(1.1);

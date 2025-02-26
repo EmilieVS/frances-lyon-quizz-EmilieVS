@@ -9,28 +9,34 @@ const scoreText = document.getElementById('score-text');
 const progressBar = document.getElementById('progressBar');
 const time = document.getElementById('timer')
 
-let currentQuestionIndex; // Commence à la première question
-//let storeQuestion; // On déclare 1 variable pour le localstorage
-let score = 0; // initie le score 
+let currentQuestionIndex; 
+let score;
 let validButton; //Afin d'isoler plus tard la bonne réponse
 let maxBar = quizzitch.questions.length; // Max de la barre de progression
 
 
 /****Fonctions secondaires*******/
-function displayBar() {
-  progressBar.value = currentQuestionIndex;
-  progressBar.max = maxBar;
-};
-
 function storage() {
   if (localStorage.getItem('position') !== null){
     currentQuestionIndex = localStorage.getItem("position");  // restitue la valeur
-    
   } else {
     currentQuestionIndex = 0;
     localStorage.setItem("position", currentQuestionIndex); // stock la valeur du currentQuestionIndex
-      
   }
+};
+
+function scoreStorage () {
+  if (localStorage.getItem('score') !== null){
+    score = localStorage.getItem('score');
+  } else {
+    score = 0;
+    localStorage.setItem('score', score);
+  }
+};
+
+function displayBar() {
+  progressBar.value = currentQuestionIndex;
+  progressBar.max = maxBar;
 };
 
 function colorAskQuestion() {
@@ -89,6 +95,7 @@ function colorAnswerAndScore(check, boutonReponse) {
   if (check) /*veut dire == true*/ {
     boutonReponse.style.borderColor = '#85e085';
     score++;
+    localStorage.setItem('score', score);
   } else {
     boutonReponse.style.borderColor = '#ff0000';
     validButton.style.borderColor = '#85e085';
@@ -118,41 +125,47 @@ function countdown() { // SetInterval appelle une fonction au bout d'un délai p
   }, 1000);
 };
 
+function displayScoreText () {
+  if (score == 0) {
+    scoreText.innerText = "Normal, t'es un moldu 🤷 ";
+  } else if (score == 1) {
+    scoreText.innerText = "T'es pas la baguette la plus vive de chez Ollivander 🪄 ";
+  } else if (score == 2) {
+    scoreText.innerText = "Qui t'as lancé 🪄 Oubliettes 🤯 ?";
+  } else if (score == 3) {
+    scoreText.innerText = "T'es le fayot de Minerva 🪦🌼";
+  } else if (score == 4) {
+    scoreText.innerText = "T'as eu optimal à toutes tes B.U.S.E. 🧑‍🎓✨ ";
+  }
+};
+
 function goToNextQuestion() {
   currentQuestionIndex++ // Incrémenter l'index de la question
   localStorage.setItem("position", currentQuestionIndex);
   storage();
+  scoreStorage();
   if (currentQuestionIndex < quizzitch.questions.length) { // Vérifier s'il reste des questions
-    countdown();
     loadQuestion(); // Afficher la question suivante
   } else {
     time.innerHTML = '';
-    localStorage.removeItem ('position');
-  
+    answers.innerHTML = ''; // Effacer les options
     progressBar.value = maxBar; // Quand plus de questions, la barre de progression est au max
     askQuestion.innerText = `Tu as obtenu ${score}/4 🧙 !` // Si plus de questions, indiquer la fin du quiz
     askQuestion.style.backgroundColor = '#463533e8';
     scoreText.style.display = 'block'; //Afficher le scoreText
-    answers.innerHTML = ''; // Effacer les options
     buttonNext.style.display = 'none'; // Désactiver le bouton Suivant
     buttonReplay.style.display = 'inline-block'; // Afficher le bouton rejouer
-    if (score == 0) {
-      scoreText.innerText = "Normal, t'es un moldu 🤷 ";
-    } else if (score == 1) {
-      scoreText.innerText = "T'es pas la baguette la plus vive de chez Ollivander 🪄 ";
-    } else if (score == 2) {
-      scoreText.innerText = "Qui t'as lancé 🪄 Oubliettes 🤯 ?";
-    } else if (score == 3) {
-      scoreText.innerText = "T'es le fayot de Minerva 🪦🌼";
-    } else if (score == 4) {
-      scoreText.innerText = "T'as eu optimal à toutes tes B.U.S.E. 🧑‍🎓✨ ";
-    }
+    displayScoreText();
+    localStorage.removeItem ('position');
+    localStorage.removeItem('score');
   }
-}
+};
 
 /*******Fonction principale********/
 function loadQuestion() {
+  countdown();
   storage();
+  scoreStorage();
   displayBar();
   answers.innerHTML = ''; // Vider le conteneur des réponses
   const goodAnswer = quizzitch.questions[currentQuestionIndex].correct_answer; // Recup bonne reponse actuelle
@@ -170,9 +183,9 @@ function loadQuestion() {
     optionButton.addEventListener("click", () => {
       let playerAnswer = optionButton.innerText;
       let coloredAnswer = checkAnswer(playerAnswer, goodAnswer);
+      colorAnswerAndScore(coloredAnswer, optionButton);
       buttonNext.disabled = false; // Au clique d'une réponse, le boutton "suivant" s'active
       colorButtonNext();
-      colorAnswerAndScore(coloredAnswer, optionButton);
       document.querySelectorAll('#options-text button').forEach(elem => { //Selection de tous les bouttons avec id options-text
         elem.disabled = true; // Pour chacun d'entre eux, désactivation
       });
@@ -181,19 +194,17 @@ function loadQuestion() {
   })
 };
 
-/****Charger la première question et le timer au chargement de la page****/
-//localStorage.setItem ('position',0);
+/******INITIALISATION DU QUIZ********/
 loadQuestion();
-countdown();
 
+//*****BOUTON SUIVANT et REJOUER******/
 buttonNext.addEventListener('click', () => {
-  goToNextQuestion()
+  goToNextQuestion();
 });
 
 buttonReplay.addEventListener('click', () => {
   currentQuestionIndex = 0; // Réinitialiser l'index 
   score = 0; //Reset du score 
-  countdown()
   buttonNext.style.display = 'inline-block'; // Afficher le bouton Suivant
   buttonReplay.style.display = 'none'; // Désactiver l'affichage du bouton rejouer
   loadQuestion(); // Recharger la première question
