@@ -149,13 +149,13 @@ function goToNextQuestion() {
   } else {
     time.innerHTML = '';
     answers.innerHTML = ''; // Effacer les options
-    progressBar.value = maxBar; // Quand plus de questions, la barre de progression est au max
     askQuestion.innerText = `Tu as obtenu ${score}/4 🧙 !` // Si plus de questions, indiquer la fin du quiz
     askQuestion.style.backgroundColor = '#463533e8';
     scoreText.style.display = 'block'; //Afficher le scoreText
-    buttonNext.style.display = 'none'; // Désactiver le bouton Suivant
-    buttonReplay.style.display = 'inline-block'; // Afficher le bouton rejouer
     displayScoreText();
+    buttonNext.style.display = 'none'; // Désactiver l'affichage du bouton Suivant
+    buttonReplay.style.display = 'inline-block'; // Afficher le bouton rejouer
+    progressBar.value = maxBar; // Quand plus de questions, la barre de progression est au max
     localStorage.removeItem ('position');
     localStorage.removeItem('score');
   }
